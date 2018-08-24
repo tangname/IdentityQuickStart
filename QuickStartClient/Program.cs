@@ -25,8 +25,12 @@ namespace QuickStartClient
                 return;
             }
 
-            var tokenClient = new TokenClient(discovery.TokenEndpoint, "client", "secret");
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+            //通过用户凭据获取令牌
+            //var tokenClient = new TokenClient(discovery.TokenEndpoint, "client", "secret");
+            //var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api1");
+
+            var tokenClient = new TokenClient(discovery.TokenEndpoint, "ro.client", "secret");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("ainslee", "password", "api1");
 
             if (tokenResponse.IsError)
             {
