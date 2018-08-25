@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityQuickStart", "Ident
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickStartWebApi", "QuickStartWebApi\QuickStartWebApi.csproj", "{89540C03-F030-476C-B7E1-622AA51551CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStartClient", "QuickStartClient\QuickStartClient.csproj", "{CCDAA694-57A0-4FA0-A599-D20EE8719152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickStartClient", "QuickStartClient\QuickStartClient.csproj", "{CCDAA694-57A0-4FA0-A599-D20EE8719152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
