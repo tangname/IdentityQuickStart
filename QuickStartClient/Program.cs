@@ -55,6 +55,7 @@ namespace QuickStartClient
 
                 Console.WriteLine(JArray.Parse(content));
             }
+
         }
     }
 }
