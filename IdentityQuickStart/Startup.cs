@@ -22,7 +22,8 @@ namespace IdentityQuickStart
                     .AddDeveloperSigningCredential()
                     .AddInMemoryApiResources(Config.GetApiResources())
                     .AddInMemoryClients(Config.GetClients())
-                    .AddTestUsers(Config.GetUsers());
+                    .AddTestUsers(Config.GetUsers())
+                    .AddInMemoryIdentityResources(Config.GetIdentityResources());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

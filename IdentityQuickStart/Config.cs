@@ -1,6 +1,8 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace IdentityQuickStart
 {
@@ -19,10 +21,21 @@ namespace IdentityQuickStart
         }
 
         /// <summary>
-        /// 添加客户端
+        /// 添加OAuth客户端
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<Client> GetClients()
+        {
+           //return GetOAuthClients();
+
+            return GetOIDCClients();
+        }
+
+        /// <summary>
+        /// 添加OAuth客户端
+        /// </summary>
+        /// <returns></returns>
+        private static IEnumerable<Client> GetOAuthClients()
         {
             var list = new List<Client>();
 
@@ -58,6 +71,37 @@ namespace IdentityQuickStart
         }
 
         /// <summary>
+        /// 添加OpenID Connect客户端
+        /// </summary>
+        /// <returns></returns>
+        private static IEnumerable<Client> GetOIDCClients()
+        {
+            var list = new List<Client>();
+
+            //使用用户凭据认证
+            var client = new Client
+            {
+                ClientId = "mvc",
+                ClientName = "MVC Client",
+                //交互用户，使用OpenID Connect认证
+                AllowedGrantTypes = GrantTypes.Implicit,
+                //登录后重定向地址
+                RedirectUris = { "http://localhost:5002/signin-oidc" },
+                //注销后重定向地址
+                PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
+                //客户端要访问的作用域(Identity)
+                AllowedScopes = {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile
+                }
+            };
+
+            list.Add(client);
+
+            return list;
+        }
+
+        /// <summary>
         /// 添加用户
         /// </summary>
         /// <returns></returns>
@@ -69,7 +113,12 @@ namespace IdentityQuickStart
             {
                 SubjectId = "1",
                 Username = "ainslee",
-                Password = "password"
+                Password = "password",
+                Claims = new[]
+                {
+                    new Claim("name","Ainslee"),
+                    new Claim("website","http://ainslee.io")
+                }
             };
             users.Add(user);
 
@@ -77,12 +126,29 @@ namespace IdentityQuickStart
             {
                 SubjectId = "2",
                 Username = "joyjoy",
-                Password = "password"
+                Password = "password",
+                Claims = new[]
+                {
+                    new Claim("name","joyjoy"),
+                    new Claim("website","http://joyjoy.io")
+                }
             };
             users.Add(user);
 
             return users;
         }
 
+        /// <summary>
+        /// 添加身份资源(OpenId Connect)
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+            };
+        }
     }
 }

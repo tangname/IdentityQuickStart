@@ -1,0 +1,14 @@
+﻿@page
+@model QuickStartMvcClient.Pages.UserModel
+@{
+    ViewData["Title"] = "User";
+}
+
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
