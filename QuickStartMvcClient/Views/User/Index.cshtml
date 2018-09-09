@@ -3,8 +3,17 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
+@using Microsoft.AspNetCore.Authentication;
 
 <div>
+    <dl>
+        <dt>access token</dt>
+        <dd>@await ViewContext.HttpContext.GetTokenAsync("access_token")</dd>
+
+        <dt>refresh token</dt>
+        <dd>@await ViewContext.HttpContext.GetTokenAsync("refresh_token")</dd>
+    </dl>
+
     <h1>User Claims</h1>
     <dl>
         @foreach (var claim in User.Claims)

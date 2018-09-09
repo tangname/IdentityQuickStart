@@ -26,9 +26,11 @@ namespace IdentityQuickStart
         /// <returns></returns>
         public static IEnumerable<Client> GetClients()
         {
-           //return GetOAuthClients();
+            //return GetOAuthClients();
 
-            return GetOIDCClients();
+            //return GetOIDCClients();
+
+            return GetHybridClients();
         }
 
         /// <summary>
@@ -94,6 +96,46 @@ namespace IdentityQuickStart
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile
                 }
+            };
+
+            list.Add(client);
+
+            return list;
+        }
+
+        /// <summary>
+        /// 添加Hybrid flow客户端
+        /// </summary>
+        /// <returns></returns>
+        private static IEnumerable<Client> GetHybridClients()
+        {
+            var list = new List<Client>();
+
+            //使用用户凭据认证
+            var client = new Client
+            {
+                ClientId = "mvc",
+                ClientName = "MVC Client",
+                //使用Hybrid flow认证
+                AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                //客户端密钥
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+
+                //登录后重定向地址
+                RedirectUris = { "http://localhost:5002/signin-oidc" },
+                //注销后重定向地址
+                PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
+                //客户端要访问的作用域(Identity)
+                AllowedScopes = {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "api1" //保护api
+                },
+                //允许刷新acess token
+                AllowOfflineAccess = true
             };
 
             list.Add(client);
